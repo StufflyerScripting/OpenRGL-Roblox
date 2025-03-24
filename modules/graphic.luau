@@ -35,3 +35,29 @@ function gl.DrawLine(x1: number, y1: number, x2: number, y2: number, color: Colo
 	end
 end
 
+function gl.DrawCircle(x0: number, y0: number, radius: number, color: Color3, screen: Folder)
+    local x = 0
+    local y = radius
+    local d = 3 - 2 * radius
+    
+    while x <= y do
+        gl.PlotPixel(x0 + x, y0 + y, true, color, screen)  -- Quadrant 1
+        gl.PlotPixel(x0 - x, y0 + y, true, color, screen)  -- Quadrant 2
+        gl.PlotPixel(x0 + x, y0 - y, true, color, screen)  -- Quadrant 3
+        gl.PlotPixel(x0 - x, y0 - y, true, color, screen)  -- Quadrant 4
+        gl.PlotPixel(x0 + y, y0 + x, true, color, screen)  -- Quadrant 5
+        gl.PlotPixel(x0 - y, y0 + x, true, color, screen)  -- Quadrant 6
+        gl.PlotPixel(x0 + y, y0 - x, true, color, screen)  -- Quadrant 7
+        gl.PlotPixel(x0 - y, y0 - x, true, color, screen)  -- Quadrant 8
+        
+        if d < 0 then
+            d = d + 4 * x + 6
+        else
+            d = d + 4 * (x - y) + 10
+            y = y - 1
+        end
+        x = x + 1
+    end
+end
+
+return gl
